@@ -1,26 +1,53 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import withSizes from 'react-sizes';
 
-function App() {
+import { Container } from './style/layout';
+import { theme } from './style/theme';
+import Home from './components/Home';
+import SearchResults from './components/Search/SearchResults';
+
+function App({ isMobile }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Container>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => <Home {...props} isMobile={isMobile} />}
+            />
+            <Route
+              path="/search"
+              render={props => <SearchResults {...props} isMobile={isMobile} />}
+            />
+          </Switch>
+        </Container>
+        <GlobalStyle />
+      </Router>
+    </ThemeProvider>
   );
 }
 
-export default App;
+const GlobalStyle = createGlobalStyle`
+  html, body, #root {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    color: ${({ theme }) => theme.darkGrey};
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+  }
+`;
+
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 737,
+});
+
+export default withSizes(mapSizesToProps)(App);
