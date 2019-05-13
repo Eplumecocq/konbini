@@ -11,7 +11,7 @@ import SearchResults from './components/Search/SearchResults';
 function App({ isMobile }) {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <Router basename="/">
         <Container>
           <Switch>
             <Route

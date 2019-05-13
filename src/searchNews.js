@@ -4,5 +4,11 @@ export default function searchNews(searchQuery, limit) {
     {
       method: 'GET',
     },
-  ).then(response => response.json());
+  ).then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('An error has occurred');
+    }
+  });
 }

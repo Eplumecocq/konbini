@@ -54,7 +54,7 @@ export const ResultsWrapper = styled(FlexWrapper)`
   ${breakpoint('desktop')`
     font-size: 20px;
   `}
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 export const Result = styled.div`
